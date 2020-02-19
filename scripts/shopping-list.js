@@ -83,10 +83,10 @@ const getItemIdFromElement = function (item) {
  * Responsible for deleting a list item.
  * @param {string} id 
  */
-const deleteListItem = function (id) {
-  const index = store.items.findIndex(item => item.id === id);
-  store.items.splice(index, 1);
-};
+// const deleteListItem = function (id) {
+//   const index = store.items.findIndex(item => item.id === id);
+//   store.items.splice(index, 1);
+// };
 
 const handleDeleteItemClicked = function () {
   // like in `handleItemCheckClicked`, we use event delegation
@@ -94,23 +94,23 @@ const handleDeleteItemClicked = function () {
     // get the index of the item in store.items
     const id = getItemIdFromElement(event.currentTarget);
     // delete the item
-    deleteListItem(id);
+    store.findAndDelete(id);
     // render the updated shopping list
     render();
   });
 };
 
-const editListItemName = function (id, itemName) {
-  const item = store.items.find(item => item.id === id);
-  item.name = itemName;
-};
+// const editListItemName = function (id, itemName) {
+//   const item = store.items.find(item => item.id === id);
+//   item.name = itemName;
+// };
 
 /**
  * Toggles the store.hideCheckedItems property
  */
-const toggleCheckedItemsFilter = function () {
-  store.hideCheckedItems = !store.hideCheckedItems;
-};
+// const toggleCheckedItemsFilter = function () {
+//   store.hideCheckedItems = !store.hideCheckedItems;
+// };
 
 /**
  * Places an event listener on the checkbox
@@ -118,7 +118,7 @@ const toggleCheckedItemsFilter = function () {
  */
 const handleToggleFilterClick = function () {
   $('.js-filter-checked').click(() => {
-    toggleCheckedItemsFilter();
+    store.toggleCheckedFilter();
     render();
   });
 };
@@ -128,7 +128,7 @@ const handleEditShoppingItemSubmit = function () {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     const itemName = $(event.currentTarget).find('.shopping-item').val();
-    editListItemName(id, itemName);
+    store.findAndUpdateName(id, itemName);
     render();
   });
 };
